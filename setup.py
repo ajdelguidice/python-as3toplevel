@@ -14,6 +14,7 @@ setup(name="as3toplevel",
       long_description=long_desc,
       classifiers=[
             "Development Status :: 4 - Beta",
+            "License :: OSI Approved :: MIT License",
             "Operating System :: OS Independent",
             "Programming Language :: Python :: 3.8",
             "Topic :: Utilities",
