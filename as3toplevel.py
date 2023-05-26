@@ -10,7 +10,7 @@ The length method is just to return the length so it can't be assigned as it can
 The inherited properties in ActionScript3 are too complex for me to implement or aren't documented very well so I won't be implementing most of them.
 Since it is hard to have a class and function with the same name, I put the conversion functions inside of their respective class (ex: instead of String(expression) to convert to string, use String.String(expression)).
 """
-__version__ = "alpha-1"
+__version__ = "0.0.1"
 
 def listtoarray(l:list):
    """
