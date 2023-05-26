@@ -8,4 +8,5 @@ setup(name="as3toplevel",
       py_modules=["as3toplevel"],
       description="Python implementation of the ActionScript3 toplevel",
       python_requires=">=3.8",
+      install_requires=["numpy",]
       )
