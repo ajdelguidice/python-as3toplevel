@@ -649,6 +649,3 @@ def trace(*args):
          else:
             output += str(args[i]) + ", "
    print(output)
-
-s1 = String("abcd")
-print(s1.toUpperCase())
