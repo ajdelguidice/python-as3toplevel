@@ -4,8 +4,6 @@ from numpy import nan
 from numpy import inf
 from numpy import NINF
 
-__version__ = "0.0.1"
-
 def listtoarray(l:list):
    """
    A function to convert a python list to an Array.
