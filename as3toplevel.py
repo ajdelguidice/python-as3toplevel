@@ -3,6 +3,8 @@ import random as r
 from numpy import nan
 from numpy import inf
 from numpy import NINF
+from numpy import base_repr
+from textwrap import wrap
 
 def listtoarray(l:list):
    """
@@ -13,16 +15,55 @@ def listtoarray(l:list):
       tempArray[i] = l[i]
    return tempArray
 
-def isFinite(num):
-   if num == inf or num == NINF:
-      return False
-   else:
-      return True
-def isNaN(num):
-   if num == nan:
-      return True
-   else:
-      return False
+def escapeFullConvert(Str):
+   """
+   Converts the parameter to a string and encodes it in a URL-encoded format, where characters are replaced with % hexadecimal sequences. When used in a URL-encoded string, the percentage symbol (%) is used to introduce escape characters, and is not equivalent to the modulo operator (%). 
+   """
+   tempdict1 = [' ', '!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ':', ';', '<', '=', '>', '?', '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', '\\', ']', '^', '_', '`', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '{', '|', '}', '~', '\x7f', '€', '\x81', '‚', 'ƒ', '„', '…', '†', '‡', 'ˆ', '‰', 'Š', '‹', 'Œ', '\x8d', 'Ž', '‘', '\X8f', '\x90', '’', '“', '”', '•', '–', '—', '˜', '™', 'š', '›', 'œ', 'ž', 'Ÿ', '!', '\xa0', '¡', '¢', '£', '¤', '¥', '¦', '§', '¨', '©', 'ª', '«', '¬', '\xad', '®', '¯', '°', '±', '²', '³', '´', 'µ', '¶', '·', '¸', '¹', 'º', '»', '¼', '½', '¾', '¿', 'À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ð', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', '×', 'Ø', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'Þ', 'ß', 'à', 'á', 'â', 'ã', 'ä', 'å', 'æ', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ð', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', '÷', 'ø', 'ù', 'ú', 'û', 'ü', 'ý', 'þ', 'ÿ']
+   tempdict2 = ['%20', '%21', '%22', '%23', '%24', '%25', '%26', '%27', '%28', '%29', '%2A', '%2B', '%2C', '%2D', '%2E', '%2F', '%30', '%31', '%32', '%33', '%34', '%35', '%36', '%37', '%38', '%39', '%3A', '%3B', '%3C', '%3D', '%3E', '%3F', '%40', '%41', '$42', '%43', '%44', '%45', '%46', '%47', '%48', '%49', '%4A', '%4B', '%4C', '%4D', '%4E', '%4F', '%50', '%51', '%52', '%53', '%54', '%55', '%56', '%57', '%58', '%59', '%5A', '%5B', '%5C', '%5D', '%5E', '%5F', '%60', '%61', '%62', '%63', '%64', '%65', '%66', '%67', '%68', '%69', '%6A', '%6B', '%6C', '%6D', '%6E', '%6F', '%70', '%71', '%72', '%73', '%74', '%75', '%76', '%77', '%78', '%79', '%7A', '%7B', '%7C', '%7D', '%7E', '%7F', '%80', '%81', '%82', '%83', '%84', '%85', '%86', '%87', '%88', '%89', '%8A', '%8B', '%8C', '%8D', '%8E', '%8f', '%90', '%91', '%92', '%93', '%94', '%95', '%96', '%97', '%98', '%99', '%9A', '%9B', '%9C', '%9D', '%9E', '%9F', '%A0', '%A1', '%A2', '%A3', '%A4', '%A5', '%A6', '%A7', '%A8', '%A9', '%AA', '%AB', '%AC', '%AD', '%AE', '%AF', '%B0', '%B1', '%B2', '%B3', '%B4', '%B5', '%B6', '%B7', '%B8', '%B9', '%BA', '%BB', '%BC', '%BD', '%BE', '%BF', '%C0', '%C1', '%C2', '%C3', '%C4', '%C5', '%C6', '%C7', '%C8', '%C9', '%CA', '%CB', '%CC', '%CD', '%CE', '%CF', '%D0', '%D1', '%D2', '%D3', '%D4', '%D5', '%D6', '%D7', '%D8', '%D9', '%DA', '%DB', '%DC', '%DD', '%DE', '%DF', '%E0', '%E1', '%E2', '%E3', '%E4', '%E5', '%E6', '%E7', '%E8', '%E9', '%EA', '%EB', '%EC', '%ED', '%EE', '%EF', '%F0', '%F1', '%F2', '%F3', '%F4', '%F5', '%F6', '%F7', '%F8', '%F9', '%FA', '%FB', '%FC', '%FD', '%FE', '%FF']
+   tempString1 = str(Str)
+   templist = wrap(tempString1, 1)
+   tempString2 = String()
+   for i in range(0,len(templist)):
+      try:
+         tempi = tempdict1.index(templist[i])
+      except:
+         tempi = -1
+      if tempi == -1:
+         tempString2 += ""
+      else:
+         tempString2 += tempdict2[tempi]
+   return tempString2
+
+class NInfinity:
+   def __init__(self):
+      self.string = "-Infinity"
+      self.value = NINF
+   def __str__(self):
+      return self.string
+class Infinity:
+   def __init__(self):
+      self.string = "Infinity"
+      self.value = inf
+   def __str__(self):
+      return self.string
+class NaN:
+   def __init__(self):
+      self.string = "NaN"
+      self.value = nan
+   def __str__(self):
+      return self.string
+   def __repr__(self):
+      return self.value
+class undefined:
+   def __init__(self):
+      self.value = "undefined"
+   def __str__(self):
+      return self.value
+
+class ArgumentError(Exception):
+   def __init__(self, message=""):
+      self.error = message
 class Array:
    """
    Lets you create array objects similar to ActionScript3
@@ -414,6 +455,99 @@ class Boolean:
          return True
       else:
          return False
+class DefinitionError(Exception):
+   def __init__(self, message=""):
+      self.error = message
+def decodeURI():
+   pass
+def decodeURIComponent():
+   pass
+def encodeURI():
+   pass
+def encodeURIComponent():
+   pass
+class Error(Exception):
+   def __init__(self, message=""):
+      self.error = message
+def escape(Str):
+   """
+   Converts the parameter to a string and encodes it in a URL-encoded format, where most nonalphanumeric characters are replaced with % hexadecimal sequences. When used in a URL-encoded string, the percentage symbol (%) is used to introduce escape characters, and is not equivalent to the modulo operator (%). 
+   The following characters are not converted to escape sequences by the escape() function.
+   0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@-_.*+/
+   """
+   tempdict1 = [' ', '!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ':', ';', '<', '=', '>', '?', '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', '\\', ']', '^', '_', '`', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '{', '|', '}', '~', '\x7f', '€', '\x81', '‚', 'ƒ', '„', '…', '†', '‡', 'ˆ', '‰', 'Š', '‹', 'Œ', '\x8d', 'Ž', '‘', '\x8F', '\x90', '’', '“', '”', '•', '–', '—', '˜', '™', 'š', '›', 'œ', 'ž', 'Ÿ', '!', '\xa0', '¡', '¢', '£', '¤', '¥', '¦', '§', '¨', '©', 'ª', '«', '¬', '\xad', '®', '¯', '°', '±', '²', '³', '´', 'µ', '¶', '·', '¸', '¹', 'º', '»', '¼', '½', '¾', '¿', 'À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ð', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', '×', 'Ø', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'Þ', 'ß', 'à', 'á', 'â', 'ã', 'ä', 'å', 'æ', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ð', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', '÷', 'ø', 'ù', 'ú', 'û', 'ü', 'ý', 'þ', 'ÿ']
+   tempdict2 = ['%20', '%21', '%22', '%23', '%24', '%25', '%26', '%27', '%28', '%29', '*', '+', '%2C', '-', '.', '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '%3A', '%3B', '%3C', '%3D', '%3E', '%3F', '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '%5B', '%5C', '%5D', '%5E', '_', '%60', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '%7B', '%7C', '%7D', '%7E', '%7F', '%80', '%81', '%82', '%83', '%84', '%85', '%86', '%87', '%88', '%89', '%8A', '%8B', '%8C', '%8D', '%8E', '%8f', '%90', '%91', '%92', '%93', '%94', '%95', '%96', '%97', '%98', '%99', '%9A', '%9B', '%9C', '%9D', '%9E', '%9F', '%A0', '%A1', '%A2', '%A3', '%A4', '%A5', '%A6', '%A7', '%A8', '%A9', '%AA', '%AB', '%AC', '%AD', '%AE', '%AF', '%B0', '%B1', '%B2', '%B3', '%B4', '%B5', '%B6', '%B7', '%B8', '%B9', '%BA', '%BB', '%BC', '%BD', '%BE', '%BF', '%C0', '%C1', '%C2', '%C3', '%C4', '%C5', '%C6', '%C7', '%C8', '%C9', '%CA', '%CB', '%CC', '%CD', '%CE', '%CF', '%D0', '%D1', '%D2', '%D3', '%D4', '%D5', '%D6', '%D7', '%D8', '%D9', '%DA', '%DB', '%DC', '%DD', '%DE', '%DF', '%E0', '%E1', '%E2', '%E3', '%E4', '%E5', '%E6', '%E7', '%E8', '%E9', '%EA', '%EB', '%EC', '%ED', '%EE', '%EF', '%F0', '%F1', '%F2', '%F3', '%F4', '%F5', '%F6', '%F7', '%F8', '%F9', '%FA', '%FB', '%FC', '%FD', '%FE', '%FF']
+   tempString1 = str(Str)
+   templist = wrap(tempString1, 1)
+   tempString2 = String()
+   for i in range(0,len(templist)):
+      try:
+         tempi = tempdict1.index(templist[i])
+      except:
+         tempi = -1
+      if tempi == -1:
+         tempString2 += ""
+      else:
+         tempString2 += tempdict2[tempi]
+   return tempString2
+class EvalError(Exception):
+   def __init__(self, message=""):
+      self.error = message
+class Int:
+   MAX_VALUE = 2147483647
+   MIN_VALUE = -2147483648
+   def __init__(self, value):
+      self.value = self.int(value)
+   def __str__(self):
+      return f'{self.value}'
+   def __getitem__(self):
+      return self.value
+   def __setitem__(self, value):
+      self.value = self.int(value)
+   def __add__(self, value):
+      return Int(self.value + self.int(value))
+   def __truediv__(self):
+      pass
+   def __float__(self):
+      return float(self.value)
+   def __int__(self):
+      return self.value
+   def int(self, value):
+      if type(value) == int or type(value) == Int:
+         return value
+      elif type(value) == float or type(value) == Number:
+         return int(value)
+      elif type(value) == str or type(value) == String:
+         try:
+            return int(value)
+         except:
+            raise TypeError("Can not convert " + str(value) + " to integer")
+      else:
+         raise TypeError("Can not convert " + str(value) + " to integer")
+   def toExponential(self):
+      pass
+   def toFixed():
+      pass
+   def toPrecision():
+      pass
+   def toString(self, radix=10):
+      #!
+      if radix > 36 or radix < 2:
+         pass
+      else:
+         return base_repr(self.value, base=radix)
+   def valueOf(self):
+      return self.value
+def isFinite(num):
+   if num == inf or num == NINF:
+      return False
+   else:
+      return True
+def isNaN(num):
+   if num == nan:
+      return True
+   else:
+      return False
 class Math:
    E = 2.71828182845905
    LN10 = 2.302585092994046
@@ -466,7 +600,7 @@ class Number:
    NEGATIVE_INFINITY = inf
    POSITIVE_INFINITY = NINF
    def __init__(self, num):
-      self.number = float(self.Number(num))
+      self.number = self.Number(num)
    def __str__(self):
       tempString = str(self.number)
       templist = tempString.split(".")
@@ -480,26 +614,53 @@ class Number:
       self.number = value
    def __add__(self, value):
       try:
-         return self.number + float(value)
+         return Number(self.number + float(value))
       except ValueError:
          raise TypeError("can not add " + f'{type(value)}' + " to Number")
+   def __sub__(self, value):
+      try:
+         return Number(self.number - float(value))
+      except ValueError:
+         raise TypeError("can not subtract " + f'{type(value)}' + " from Number")
+   def __mul__(self, value):
+      try:
+         return Number(self.number * float(value))
+      except ValueError:
+         raise TypeError("can not multiply Number by " + f'{type(value)}')
+   def __truediv__(self, value):
+      if value == 0:
+         if self.number == 0:
+            return Number(self.NaN)
+         elif self.number > 0:
+            return Number(self.POSITIVE_INFINITY)
+         elif self.number < 0:
+            return Number(self.NEGATIVE_INFINITY)
+      else:
+         try:
+            return Number(self.number / float(value))
+         except:
+            raise TypeError("Can not divide Number by " + f'{type(value)}')
+   def __float__(self):
+      return float(self.number)
+   def __int__(self):
+      return int(self.number)
    def Number(self, expression):
       if type(expression) == int or type(expression) == float or type(expression) == Number:
          return expression
       elif expression == "undefined":
          return self.NaN
       elif expression == "null":
-         return 0
+         return 0.0
       elif expression == self.NaN:
          return self.NaN
       elif type(expresssion) == bool or type(expression) == Boolean:
          if expression == True:
-            return 1
+            return 1.0
          else:
-            return 0
+            return 0.0
       elif type(expresssion) == str or type(expression) == String:
          if expression == "":
-            return 0
+            return 0.0
          else:
             try:
                return float(expression)
@@ -509,9 +670,6 @@ class Number:
       if fractionDigits < 0 or fractionDigits > 20:
          raise Exception("RangeError: fractionDigits is outside of acceptable range")
       else:
-         tempString = str(self.number)
-         templist = tempString.split(".")
-         tempExp = len(templist[0]) - 1
          pass
    def toFixed(self, fractionDigits):
       if fractionDigits < 0 or fractionDigits > 20:
@@ -538,6 +696,21 @@ class Number:
       return str(self.number)
    def valueOf(self):
       return self.number
+def parseFloat():
+   pass
+def parseInt():
+   pass
+class RangeError(Exception):
+   def __init__(self, message=""):
+      self.error = message
+class ReferenceError(Exception):
+   def __init__(self, message=""):
+      self.error = message
+class RegExp:
+   pass
+class SecurityError(Exception):
+   def __init__(self, message=""):
+      self.error = message
 class String:
    def __init__(self, value=""):
       self.string = self.String(value)
@@ -553,16 +726,23 @@ class String:
    def __len__(self):
       return len(self.string)
    def __add__(self, value):
-      return self.string + self.String(value)
+      return String(self.string + self.String(value))
+   def __int__(self):
+      return int(self.string)
+   def __float__(self):
+      return float(self.string)
    def length(self):
       len(self.string)
    def String(self, expression):
-      if type(expression) == str or type(expression) == String:
+      if type(expression) == str:
          return expression
-      elif expression == True:
-         return "true"
-      elif expression == False:
-         return "false"
+      elif type(expression) == String:
+         return expression.string
+      elif type(expression) == bool:
+         if expression == True:
+            return "true"
+         elif expression == False:
+            return "false"
       elif expression == nan:
          return "NaN"
       elif type(expression) == Array or type(expression) == Boolean or type(expression) == Number:
@@ -606,6 +786,8 @@ class String:
       pass
    def split():
       pass
+   def substr():
+      pass
    def substring(self, startIndex=0, endIndex={}):
       tempInt = len(self.string)
       si = startIndex
@@ -635,6 +817,41 @@ class String:
       return self.string.upper()
    def valueOf(self):
       return self.string
+class SyntaxError(Exception):
+   def __init__(self, message=""):
+      self.error = message
+class TypeError(Exception):
+   def __init__(self, message=""):
+      self.error = message
+class uint:
+   pass
+def unescape(Str):
+   """
+   Evaluates the parameter str as a string, decodes the string from URL-encoded format (converting all hexadecimal sequences to ASCII characters), and returns the string. 
+   """
+   tempdict1 = [' ', '!', '"', '#', '$', '%', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ':', ';', '<', '=', '>', '?', '@', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '[', '\\', ']', '^', '_', '`', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '{', '|', '}', '~', '\x7f', '€', '\x81', '‚', 'ƒ', '„', '…', '†', '‡', 'ˆ', '‰', 'Š', '‹', 'Œ', '\x8d', 'Ž', '‘', '\X8f', '\x90', '’', '“', '”', '•', '–', '—', '˜', '™', 'š', '›', 'œ', 'ž', 'Ÿ', '!', '\xa0', '¡', '¢', '£', '¤', '¥', '¦', '§', '¨', '©', 'ª', '«', '¬', '\xad', '®', '¯', '°', '±', '²', '³', '´', 'µ', '¶', '·', '¸', '¹', 'º', '»', '¼', '½', '¾', '¿', 'À', 'Á', 'Â', 'Ã', 'Ä', 'Å', 'Æ', 'Ç', 'È', 'É', 'Ê', 'Ë', 'Ì', 'Í', 'Î', 'Ï', 'Ð', 'Ñ', 'Ò', 'Ó', 'Ô', 'Õ', 'Ö', '×', 'Ø', 'Ù', 'Ú', 'Û', 'Ü', 'Ý', 'Þ', 'ß', 'à', 'á', 'â', 'ã', 'ä', 'å', 'æ', 'ç', 'è', 'é', 'ê', 'ë', 'ì', 'í', 'î', 'ï', 'ð', 'ñ', 'ò', 'ó', 'ô', 'õ', 'ö', '÷', 'ø', 'ù', 'ú', 'û', 'ü', 'ý', 'þ', 'ÿ']
+   tempdict2 = ['%20', '%21', '%22', '%23', '%24', '%25', '%26', '%27', '%28', '%29', '%2A', '%2B', '%2C', '%2D', '%2E', '%2F', '%30', '%31', '%32', '%33', '%34', '%35', '%36', '%37', '%38', '%39', '%3A', '%3B', '%3C', '%3D', '%3E', '%3F', '%40', '%41', '$42', '%43', '%44', '%45', '%46', '%47', '%48', '%49', '%4A', '%4B', '%4C', '%4D', '%4E', '%4F', '%50', '%51', '%52', '%53', '%54', '%55', '%56', '%57', '%58', '%59', '%5A', '%5B', '%5C', '%5D', '%5E', '%5F', '%60', '%61', '%62', '%63', '%64', '%65', '%66', '%67', '%68', '%69', '%6A', '%6B', '%6C', '%6D', '%6E', '%6F', '%70', '%71', '%72', '%73', '%74', '%75', '%76', '%77', '%78', '%79', '%7A', '%7B', '%7C', '%7D', '%7E', '%7F', '%80', '%81', '%82', '%83', '%84', '%85', '%86', '%87', '%88', '%89', '%8A', '%8B', '%8C', '%8D', '%8E', '%8f', '%90', '%91', '%92', '%93', '%94', '%95', '%96', '%97', '%98', '%99', '%9A', '%9B', '%9C', '%9D', '%9E', '%9F', '%A0', '%A1', '%A2', '%A3', '%A4', '%A5', '%A6', '%A7', '%A8', '%A9', '%AA', '%AB', '%AC', '%AD', '%AE', '%AF', '%B0', '%B1', '%B2', '%B3', '%B4', '%B5', '%B6', '%B7', '%B8', '%B9', '%BA', '%BB', '%BC', '%BD', '%BE', '%BF', '%C0', '%C1', '%C2', '%C3', '%C4', '%C5', '%C6', '%C7', '%C8', '%C9', '%CA', '%CB', '%CC', '%CD', '%CE', '%CF', '%D0', '%D1', '%D2', '%D3', '%D4', '%D5', '%D6', '%D7', '%D8', '%D9', '%DA', '%DB', '%DC', '%DD', '%DE', '%DF', '%E0', '%E1', '%E2', '%E3', '%E4', '%E5', '%E6', '%E7', '%E8', '%E9', '%EA', '%EB', '%EC', '%ED', '%EE', '%EF', '%F0', '%F1', '%F2', '%F3', '%F4', '%F5', '%F6', '%F7', '%F8', '%F9', '%FA', '%FB', '%FC', '%FD', '%FE', '%FF']
+   tempString1 = str(Str)
+   templist = wrap(tempString1,1)
+   tempString2 = String()
+   while len(templist) > 0:
+      tempString3 = ""
+      if templist[0] == "%":
+         for i in range(0,3):
+            tempString3 += templist.pop(0)
+         tempi = tempdict2.index(tempString3)
+         tempString2 += tempdict1[tempi]
+      else:
+         tempString2 += templist.pop(0)
+   return tempString2
+class URIError(Exception):
+   def __init__(self, message=""):
+      self.error = message
+class Vector:
+   pass
+class VerifyError(Exception):
+   def __init__(self, message=""):
+      self.error = message
 
 def trace(*args):
    output = ""

@@ -9,6 +9,7 @@ A python implementation of some of the ActionScript3 toplevel functions and clas
 # Currently Implemented
 <br>isFinite
 <br>isNaN
+<br>ArgumentError(Error Class)
 <br>Array(Function) - Moved to Array.Array()
 <br>Array(Data Type)
 <br>&emsp;Array(Constructor) - Create from values moved to class init function, create to size moved to toSize(Function).
@@ -38,6 +39,12 @@ A python implementation of some of the ActionScript3 toplevel functions and clas
 <br>&emsp;Boolean(Constructor) - Moved to class init function
 <br>&emsp;toString(Function)
 <br>&emsp;valueOf(Function)
+<br>DefinitionError(Error Class)
+<br>escape(Function)
+<br>Error(Error Class)
+<br>EvalError(Error Class)
+<br>int(Data Type) - Moved to Int
+<br>valueOf(Function)
 <br><br>Math(Class) - All functions in this class had corresponding functions in python
 <br>&emsp;E(Constant)
 <br>&emsp;LN10(Constant)
@@ -70,6 +77,9 @@ A python implementation of some of the ActionScript3 toplevel functions and clas
 <br>&emsp;Number(Constructor) - Moved to class init function
 <br>&emsp;toFixed(Function)
 <br>&emsp;valueOf(Function)
+<br>RangeError(Error Class)
+<br>ReferenceError(Error Class)
+<br>SecurityError(Error Class)
 <br>String(Function) - Moved to String.String()
 <br>String(Data Type)
 <br>&emsp;String(Constructor) - Moved to class init function
@@ -85,14 +95,20 @@ A python implementation of some of the ActionScript3 toplevel functions and clas
 <br>&emsp;toLowerCase(Function)
 <br>&emsp;toUpperCase(Function)
 <br>&emsp;valueOf(Function)
+<br>SyntaxError(Error Class)
+<br>TypeError(Error Class)
+<br>unescape(Function)
+<br>URIError(Error Class)
+<br>VerifyError(Error Class)
 <br><br>
 # Partially Implemented
 <br>Number(Data Type)
 <br>&emsp;toString(Function)
+<br>int(Data Type)
+<br>&emsp;toString(Function)
 <br>trace(Function)
 <br><br>
 # Future Plans
-<br>ArgumentError(Error Class)
 <br>Array(Data Type)
 <br>&emsp;sort(Function)
 <br>&emsp;sortOn(Function)
@@ -100,13 +116,11 @@ A python implementation of some of the ActionScript3 toplevel functions and clas
 <br>decodeURIComponent(Function)
 <br>encodeURI(Function)
 <br>encodeURIComponent(Function)
-<br>escape(Function)
-<br>Error(Error Class)
-<br>EvalError(Error Class)
 <br>int(Function)
 <br>int(Data Type)
-<br>RangeError(Error Class)
-<br>ReferenceError(Error Class)
+<br>&emsp;toExponential(Function)
+<br>&emsp;toFixed(Function)
+<br>&emsp;toPrecision(Function)
 <br>RegExp(Data Type)
 <br>Number(Data Type)
 <br>&emsp;toExponential(Function)
@@ -122,17 +136,14 @@ A python implementation of some of the ActionScript3 toplevel functions and clas
 <br>&emsp;slice(Function)
 <br>&emsp;split(Function)
 <br>&emsp;substr(Function)
-<br>SyntaxError(Error Class)
-<br>TypeError(Error Class)
 <br>uint(Function)
 <br>uint(Data Type)
-<br>unescape(Function)
-<br>URIError(Error Class)
 <br>Vector(Function)
 <br>Vector(Data Type)
-<br>VerifyError(Error Class)
 <br><br>
 # Functions I added
 <br>listtoarray - converts a given list to an Array.
 <br>Array.toSize - Creates an Array to specified size. If nothing is specified, assumes 0 elements
+<br>Number dunder methods int, float, add, sub, mul, truediv
+<br>escapeFullConvert - converts all characters to URL-encoded format
 
