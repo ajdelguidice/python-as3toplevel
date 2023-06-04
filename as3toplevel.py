@@ -1059,6 +1059,3 @@ class Vector:
 class VerifyError(Exception):
    def __init__(self, message=""):
       self.error = message
-
-s1 = String("1234567890")
-print(s1.substr(-11,1))
