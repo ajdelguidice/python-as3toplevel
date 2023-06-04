@@ -5,6 +5,8 @@ from numpy import inf
 from numpy import NINF
 from numpy import base_repr
 from textwrap import wrap
+from time import time, strftime
+from datetime import datetime
 
 def listtoarray(l:list):
    """
@@ -41,12 +43,16 @@ class NInfinity:
       self.value = NINF
    def __str__(self):
       return self.string
+   def __repr__(self):
+      return self.value
 class Infinity:
    def __init__(self):
       self.string = "Infinity"
       self.value = inf
    def __str__(self):
       return self.string
+   def __repr__(self):
+      return self.value
 class NaN:
    def __init__(self):
       self.string = "NaN"
@@ -455,6 +461,139 @@ class Boolean:
          return True
       else:
          return False
+class Date:
+   def __init__(self, time=time()):
+      self.time = time
+      #self.date
+      #self.dateUTC
+      #self.day
+      #self.dayUTC
+      #self.fullYear
+      #self.fullYearUTC
+      #self.hours
+      #self.hoursUTC
+      #self.milliseconds
+      #self.millisecondsUTC
+      #self.minutes
+      #self.minutesUTC
+      #self.month
+      #self.monthUTC
+      #self.seconds
+      #self.secondsUTC
+      self._tz = str(strftime('%Z%z'))
+      self.timezoneOffset = self._getcurrenttzoffset()
+   def __str__(self):
+      #returns dayoftheweek month dayofmonth time timezone year
+      pass
+   def __repr__(self):
+      return self.time
+   def _getcurrenttzoffset(self):
+      #Returns difference in minutes between local and UTC
+      i1 = self._tz.find("-")
+      if i1 == -1:
+         i1 = self._tz.find("+")
+         if i1 == -1:
+            return 0
+         else:
+            signmult = 1
+            l1 = self._tz.split("+")
+      else:
+         signmult = -1
+         l1 = self._tz.split("-")
+      l2 = wrap(l1[1],1)
+      hours = int(l2.pop(0) + l2.pop(0))
+      minutes = int(l2.pop(0) + l2.pop(0))
+      return (hours * 60 + minutes) * signmult
+   def Date():
+      pass
+   def getDate():
+      pass
+   def getDay():
+      pass
+   def getFullYear():
+      pass
+   def getHours():
+      pass
+   def getMilliseconds():
+      pass
+   def getMinutes():
+      pass
+   def getMonth():
+      pass
+   def getSeconds():
+      pass
+   def getTime():
+      pass
+   def getTimezoneOffset():
+      pass
+   def getUTCDate():
+      pass
+   def getUTCDay():
+      pass
+   def getUTCFullYear():
+      pass
+   def getUTCHours():
+      pass
+   def getUTCMilliseconds():
+      pass
+   def getUTCMinutes():
+      pass
+   def GetUTCMonth():
+      pass
+   def getUTCSeconds():
+      pass
+   def parse():
+      pass
+   def setDate():
+      pass
+   def setFullYear():
+      pass
+   def setHours():
+      pass
+   def setMilliseconds():
+      pass
+   def setMinutes():
+      pass
+   def setMonth():
+      pass
+   def setSeconds():
+      pass
+   def setTime():
+      pass
+   def setUTCDate():
+      pass
+   def setUTCFullYear():
+      pass
+   def setUTCHours():
+      pass
+   def setUTCMilliseconds():
+      pass
+   def setUTCMinutes():
+      pass
+   def setUTCMonth():
+      pass
+   def setUTCSeconds():
+      pass
+   def toDateString():
+      pass
+   def toJSON():
+      pass
+   def toLocaleDateString():
+      pass
+   def toLocaleString():
+      pass
+   def toLocaleTimeString():
+      pass
+   def toString():
+      pass
+   def toTimeString():
+      pass
+   def toUTCString():
+      pass
+   def UTC():
+      pass
+   def valueOf(self):
+      return self.time
 class DefinitionError(Exception):
    def __init__(self, message=""):
       self.error = message
@@ -506,8 +645,23 @@ class Int:
       self.value = self.int(value)
    def __add__(self, value):
       return Int(self.value + self.int(value))
-   def __truediv__(self):
-      pass
+   def __sub__(self, value):
+      return Int(self.value - self.int(value))
+   def __mul__(self, value):
+      return Int(self.value * self.int(value))
+   def __truediv__(self, value):
+      if value == 0:
+         if self.value == 0:
+            return Number(Number.NaN)
+         elif self.value > 0:
+            return Number(Number.POSITIVE_INFINITY)
+         elif self.value < 0:
+            return Number(Number.NEGATIVE_INFINITY)
+      else:
+         try:
+            return Int(self.value / self.int(value))
+         except:
+            raise TypeError("Can not divide Int by " + f'{type(value)}')
    def __float__(self):
       return float(self.value)
    def __int__(self):
@@ -524,10 +678,41 @@ class Int:
             raise TypeError("Can not convert " + str(value) + " to integer")
       else:
          raise TypeError("Can not convert " + str(value) + " to integer")
-   def toExponential(self):
-      pass
-   def toFixed():
-      pass
+   def toExponential(self, fractionDigits):
+      if fractionDigits < 0 or fractionDigits > 20:
+         raise Exception("RangeError: fractionDigits is outside of acceptable range")
+      else:
+         tempString1 = str(self.value)
+         templist = wrap(tempString1,1)
+         if templist[0] == "-":
+            templist.pop(0)
+            exponent = len(templist) - 1
+            tempString2 = "-" + templist.pop(0) + "."
+         else:
+            exponent = len(templist) - 1
+            tempString2 = templist.pop(0) + "."
+         if exponent == 0:
+            return self.value
+         else:
+            i = 0
+            while i < fractionDigits:
+               tempString2 += templist.pop(0)
+               i += 1
+            return tempString2 + "e+" + str(exponent)
+   def toFixed(self,fractionDigits):
+      if fractionDigits < 0 or fractionDigits > 20:
+         raise Exception("RangeError: fractionDigits is outside of acceptable range")
+      else:
+         tempString = str(self.value)
+         if fractionDigits == 0:
+            return tempString
+         else:
+            tempString += "."
+            i = 0
+            while i < fractionDigits:
+               tempString += "0"
+               i += 1
+            return tempString
    def toPrecision():
       pass
    def toString(self, radix=10):
@@ -596,12 +781,14 @@ class Math:
 class Number:
    MAX_VALUE = 1.79e308
    MIN_VALUE = 5e-324
-   NaN = nan
-   NEGATIVE_INFINITY = inf
-   POSITIVE_INFINITY = NINF
+   NaN = NaN()
+   NEGATIVE_INFINITY = NInfinity()
+   POSITIVE_INFINITY = Infinity()
    def __init__(self, num):
       self.number = self.Number(num)
    def __str__(self):
+      if self.number == self.NaN or self.number == self.POSITIVE_INFINITY or self.number == self.NEGATIVE_INFINITY:
+         return str(self.number)
       tempString = str(self.number)
       templist = tempString.split(".")
       if templist[1] == "0":
@@ -645,7 +832,11 @@ class Number:
    def __int__(self):
       return int(self.number)
    def Number(self, expression):
-      if type(expression) == int or type(expression) == float or type(expression) == Number:
+      if expression == self.NEGATIVE_INFINITY:
+         return self.NEGATIVE_INFINITY
+      elif expression == self.POSITIVE_INFINITY:
+         return self.POSITIVE_INFINITY
+      elif type(expression) == int or type(expression) == float or type(expression) == Number:
          return expression
       elif expression == "undefined":
          return self.NaN
@@ -653,12 +844,12 @@ class Number:
          return 0.0
       elif expression == self.NaN:
          return self.NaN
-      elif type(expresssion) == bool or type(expression) == Boolean:
+      elif type(expression) == bool or type(expression) == Boolean:
          if expression == True:
             return 1.0
          else:
             return 0.0
-      elif type(expresssion) == str or type(expression) == String:
+      elif type(expression) == str or type(expression) == String:
          if expression == "":
             return 0.0
          else:
@@ -666,29 +857,10 @@ class Number:
                return float(expression)
             except:
                return self.NaN
-   def toExponential(self, fractionDigits):
-      if fractionDigits < 0 or fractionDigits > 20:
-         raise Exception("RangeError: fractionDigits is outside of acceptable range")
-      else:
-         pass
-   def toFixed(self, fractionDigits):
-      if fractionDigits < 0 or fractionDigits > 20:
-         raise Exception("RangeError: fractionDigits is outside of acceptable range")
-      else:
-         tempString1 = str(self.number)
-         templist = tempString1.split(".")
-         if fractionDigits == 0:
-            return templist[0]
-         else:
-            tempString2 = templist[0]
-            tempString2 += "."
-            tempString3 = templist[1]
-            for i in range(0,fractionDigits):
-               try:
-                  tempString2 += tempString3[i]
-               except IndexError:
-                  tempString2 += "0"
-            return tempString2
+   def toExponential(self):
+      pass
+   def toFixed(self):
+      pass
    def toPrecision():
       pass
    def toString(self, radix=10):
@@ -732,7 +904,7 @@ class String:
    def __float__(self):
       return float(self.string)
    def length(self):
-      len(self.string)
+      return len(self.string)
    def String(self, expression):
       if type(expression) == str:
          return expression
@@ -786,8 +958,32 @@ class String:
       pass
    def split():
       pass
-   def substr():
-      pass
+   def substr(self, startIndex=0, Len={}):
+      tempInt = len(self.string)
+      tempString1 = wrap(self.string,1)
+      if startIndex > tempInt - 1:
+         raise RangeError("startIndex is outside of the string")
+      if startIndex < 0 and abs(startIndex) > tempInt:
+         raise RangeError("startIndex is outside of the string")
+      if Len == {}:
+         length = tempInt
+      else:
+         length = Len
+      if startIndex < 0:
+         tempIndex = tempInt - abs(startIndex)
+      else:
+         tempIndex = startIndex
+      i = tempIndex
+      tempString2 = ""
+      if tempIndex + length >= tempInt:
+         while i < tempInt:
+            tempString2 += tempString1[i]
+            i += 1
+      else:
+         while i < tempIndex + length:
+            tempString2 += tempString1[i]
+            i += 1
+      return tempString2
    def substring(self, startIndex=0, endIndex={}):
       tempInt = len(self.string)
       si = startIndex
@@ -820,6 +1016,17 @@ class String:
 class SyntaxError(Exception):
    def __init__(self, message=""):
       self.error = message
+def trace(*args):
+   output = ""
+   for i in range(0, len(args)):
+      if len(args) == 1:
+         output = str(args[0])
+      else:
+         if i == len(args) - 1:
+            output += str(args[i])
+         else:
+            output += str(args[i]) + " "
+   print(output)
 class TypeError(Exception):
    def __init__(self, message=""):
       self.error = message
@@ -853,14 +1060,5 @@ class VerifyError(Exception):
    def __init__(self, message=""):
       self.error = message
 
-def trace(*args):
-   output = ""
-   for i in range(0, len(args)):
-      if len(args) == 1:
-         output = str(args[0])
-      else:
-         if i == len(args) - 1:
-            output += str(args[i])
-         else:
-            output += str(args[i]) + ", "
-   print(output)
+s1 = String("1234567890")
+print(s1.substr(-11,1))
