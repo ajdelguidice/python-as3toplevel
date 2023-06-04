@@ -7,8 +7,6 @@ A python implementation of some of the ActionScript3 toplevel functions and clas
 <br><br>I have no way as of current to test the accuracy of these functions as I can't find a compiler for actionscript that I could get to work so if anything doesn't work or there is undocumented functionality please let me know on the github page.
 <br><br>
 # Currently Implemented
-<br>isFinite
-<br>isNaN
 <br>ArgumentError(Error Class)
 <br>Array(Function) - Moved to Array.Array()
 <br>Array(Data Type)
@@ -40,10 +38,13 @@ A python implementation of some of the ActionScript3 toplevel functions and clas
 <br>&emsp;toString(Function)
 <br>&emsp;valueOf(Function)
 <br>DefinitionError(Error Class)
-<br>escape(Function)
 <br>Error(Error Class)
 <br>EvalError(Error Class)
 <br>int(Data Type) - Moved to Int
+<br>&emsp;toExponential(Function)
+<br>&emsp;toFixed(Function)
+<br>isFinite(Function)
+<br>isNaN(Function)
 <br>valueOf(Function)
 <br><br>Math(Class) - All functions in this class had corresponding functions in python
 <br>&emsp;E(Constant)
@@ -75,7 +76,6 @@ A python implementation of some of the ActionScript3 toplevel functions and clas
 <br>Number(Function) - Moved to Number.Number()
 <br>Number(Data Type)
 <br>&emsp;Number(Constructor) - Moved to class init function
-<br>&emsp;toFixed(Function)
 <br>&emsp;valueOf(Function)
 <br>RangeError(Error Class)
 <br>ReferenceError(Error Class)
@@ -97,33 +97,40 @@ A python implementation of some of the ActionScript3 toplevel functions and clas
 <br>&emsp;valueOf(Function)
 <br>SyntaxError(Error Class)
 <br>TypeError(Error Class)
-<br>unescape(Function)
 <br>URIError(Error Class)
 <br>VerifyError(Error Class)
 <br><br>
 # Partially Implemented
+<br>Date(Data Type)
+<br>escape(Function)
 <br>Number(Data Type)
 <br>&emsp;toString(Function)
 <br>int(Data Type)
-<br>&emsp;toString(Function)
-<br>trace(Function)
+<br>&emsp;toString(Function) - Don't know what is supposed to happen when radix is outside of the given range (not documented)
+<br>Number(Data Type)
+<br>&emsp;toExponential(Function)
+<br>String(Data Type)
+<br>&emsp;substr(Function) - Don't know what happens when startIndex is outside of string (not documented)
+<br>trace(Function) - Don't know how to accept which file to write to (not documented)
+<br>unescape(Function)
 <br><br>
 # Future Plans
 <br>Array(Data Type)
 <br>&emsp;sort(Function)
 <br>&emsp;sortOn(Function)
+<br>Date(Function)
+<br>Date(Data Type)
 <br>decodeURI(Function)
 <br>decodeURIComponent(Function)
 <br>encodeURI(Function)
 <br>encodeURIComponent(Function)
 <br>int(Function)
 <br>int(Data Type)
-<br>&emsp;toExponential(Function)
-<br>&emsp;toFixed(Function)
 <br>&emsp;toPrecision(Function)
 <br>RegExp(Data Type)
 <br>Number(Data Type)
 <br>&emsp;toExponential(Function)
+<br>&emsp;toFixed(Function)
 <br>&emsp;toPrecision(Function)
 <br>&emsp;toString(Function)
 <br>parseFloat(Function)
@@ -135,14 +142,13 @@ A python implementation of some of the ActionScript3 toplevel functions and clas
 <br>&emsp;search(Function)
 <br>&emsp;slice(Function)
 <br>&emsp;split(Function)
-<br>&emsp;substr(Function)
 <br>uint(Function)
 <br>uint(Data Type)
 <br>Vector(Function)
 <br>Vector(Data Type)
 <br><br>
 # Functions I added
-<br>listtoarray - converts a given list to an Array.
+<br>listtoarray - converts a given list to an Array. Returns the Array.
 <br>Array.toSize - Creates an Array to specified size. If nothing is specified, assumes 0 elements
 <br>Number dunder methods int, float, add, sub, mul, truediv
 <br>escapeFullConvert - converts all characters to URL-encoded format
